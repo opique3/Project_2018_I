@@ -33,6 +33,23 @@ end do
 
 end subroutine IN_positions
 
+subroutine IN_velocities(N,seed,vel)
+implicit none
+INTEGER, INTENT(IN) :: N, seed
+REAL(8), DIMENSION(N,3), INTENT(IN) :: vel
+INTEGER :: i
+
+call srand(seed)
+
+Do i = 1,N,1
+  vel(i,1) = rand() - 0.5
+  vel(i,2) = rand() - 0.5
+  vel(i,3) = rand() - 0.5
+end do
+
+end subroutine IN_velocities
+
+
 subroutine momentum(N,vel,P_total)
 implicit none
 INTEGER, INTENT(IN) :: N
@@ -46,5 +63,6 @@ Do i = 1,N,1
 end do
 
 end subroutine momentum
+
 
 end module genis_module
