@@ -2,16 +2,15 @@ module genis_module
 implicit none
 contains
 
-subroutine IN_positions(M,density,pos)
+subroutine IN_positions(M,N,density,pos)
 implicit none
-INTEGER, INTENT(IN) :: N
+INTEGER, INTENT(IN) :: M, N
 REAL(8), INTENT(IN) :: density
 REAL(8), DIMENSION(N,3), INTENT(OUT) :: pos
-INTEGER :: N, NN, ix, iy, iz, num
+INTEGER :: NN, ix, iy, iz, num1, num2
 REAL(8) :: a, a2, L
 REAL(8), DIMENSION(3) :: e1, e2, e3
 
-N = 2*M**3
 L = (N/density)**(1./3.)
 a = L/M
 a2 = a/2.
@@ -43,7 +42,7 @@ INTEGER :: i
 
 P_total = 0.0D0
 Do i = 1,N,1
-  P_total(:) = P_total(:) + vel(:)
+  P_total(:) = P_total(:) + vel(i,:)
 end do
 
 end subroutine momentum
