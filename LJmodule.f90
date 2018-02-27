@@ -1,9 +1,13 @@
-module oriol
+!--------------------
+!MADE BY ORIOL PIQUÉ
+!--------------------
+
+module LJmodule
 use PBCmodule
 implicit none
 contains
 
-
+!Subrutina pel càlcul de les forces conseqüència de la interacció LJ entre les nostres partícules.
 subroutine LJ_pot(nPart, pos, eps, sig, boxSize, cutOff, F, V)
 implicit none
 integer, intent(in)                             :: nPart

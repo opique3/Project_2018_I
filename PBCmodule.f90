@@ -1,9 +1,12 @@
-module oriol
+!--------------------
+!MADE BY ORIOL PIQUÉ
+!--------------------
+
+module PBCmodule
 implicit none
 contains
 
-
-! Subrutina per les condicions periòdiques de contorn per una sola partícula.
+!Subrutina per les condicions periòdiques de contorn per una sola partícula.
 subroutine pbc(v, boxSize)
 implicit none
 real(8), intent(in)                             :: boxSize
