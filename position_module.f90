@@ -21,7 +21,7 @@ Do iz = 1,M,1
   Do iy = 1,M,1
     Do ix = 1,M,1
         num = ix + (iy-1)*M + (iz-1)*M*M
-        pos(num1,:) = ix*e1(:) + iy*e2(:) + iz*e3(:)
+        pos(num,:) = ix*e1(:) + iy*e2(:) + iz*e3(:)
     end do
   end do
 end do
