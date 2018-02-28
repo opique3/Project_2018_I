@@ -1,4 +1,4 @@
-module store_positions
+module store_positions_module
 contains
 
 subroutine print_positions(un, nPart, pos, time)
@@ -16,4 +16,4 @@ end do
 
 end subroutine print_positions
 
-end module store_positions
+end module store_positions_module
