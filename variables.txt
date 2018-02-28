@@ -2,6 +2,11 @@
 # Here we all will write the variables we are using.
 
 # Jordi
+--------Variables de Input/Output------------------ 
+velocity_verlet ------> time, dt, pos, vel, nPart, sig, boxSize, cutOff, V, F
+
+ andersen_thermo------> dt, T, nPart, seed, vel, eps
+-----------------------------------------------------
 
 # Raul
 
