@@ -1,16 +1,16 @@
 program dynamics
 !use the necessary modules
-use moment
-use positions
-use velocities
-use andersen_thermostate
-use Verlet_algorithm
-use LJmodule
-use PBCmodule
-use readmodule
-use store_positions
-use kinetic_energy
-
+use moment_module
+use positions_module
+use velocities_module
+use andersen_therm_module
+use vel_verlet_module
+use lj_module
+use pbc_module
+use read_data_module
+use print_positions_module
+use kinetic_energy_module
+use print_data_module
 
 implicit none
 character(25)                           :: fName, fff
@@ -20,7 +20,7 @@ real(4)                                 :: start, finish
 real(8)                                 :: dt, boxSize, cutOff, T, density, dtAux
 integer                                 :: nPartDim, nPart, nSteps
 real(8), allocatable, dimension(:,:)    :: pos, F, vel
-real(8)                                 :: V, eps, sig, time, KE, Tinst, total_momentum
+real(8)                                 :: V, eps, sig, time, KE, Tinst, total_momentum(3)
 integer                                 :: seed, trjCount, thermCount
 integer                                 :: initUn, finUn, trajUn, dataUn, velUn
     
@@ -35,7 +35,7 @@ open(unit=un, file=trim(fName), status='old')
     
 ! Llegir les dades del fitxer de entrada i alocatar la variable que contindrà
 ! la posició de totes les partícules.
-call readData(un, dt, boxSize, cutOff, nPartDim, density, T, eps, sig, nSteps, seed)
+call readData(un, dt, boxSize, cutOff, nPartDim, T, eps, sig, nSteps, density, seed)
 nPart = nPartDim**3
 allocate(pos(nPart,3), F(nPart,3), vel(nPart,3))
 if (mod(float(nPart),8.) /= 0.) then
@@ -86,7 +86,7 @@ do i = 1, nSteps, 1
                 call print_positions(velUn,  nPart, vel, time)
                 call kinetic_energy(vel, KE, Tinst, nPart)
                 call momentum(nPart, vel, total_momentum)
-                write(dataUn,*) time, V, KE, Tinst, total_momentum
+                call print_data(time, V, KE, Tinst, total_momentum, dataUn)
                 trjCount = 0
         end if
         if (thermCount == 10) then
