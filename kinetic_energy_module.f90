@@ -18,5 +18,4 @@ end do
 KE = KE/2.0
 Tinst = 2.0*KE/(3.0*float(nPart))
 end subroutine kinetic_energy
-
 end module kintetic_energy_module
