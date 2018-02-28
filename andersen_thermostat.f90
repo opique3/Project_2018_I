@@ -1,9 +1,9 @@
 module andersen_thermostat
 contains
-subroutine andersen_thermo(dt, T, nPart, seed, vel, eps)
+subroutine andersen_thermo(dt, T, nPart, seed, vel)
 implicit none
 integer, intent(in)                             :: nPart, seed
-real(8), intent(in)                             :: dt, T, eps
+real(8), intent(in)                             :: dt, T
 real(8), dimension(nPart,3), intent(inout)      :: vel
 real(8)                                         :: x1, x2, y1, y2, w
 integer                                         :: i, j, k
