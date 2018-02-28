@@ -1,6 +1,6 @@
-module Verlet_algorithm
-use PBCmodule
-use LJmodule
+module vel_verlet_module
+use pbc_module
+use lj_module
 contains
 subroutine velocity_verlet(time, dt, pos, vel, nPart, eps, sig, boxSize, cutOff, V, F)
 implicit none
@@ -34,4 +34,4 @@ do i = 1, nPart, 1
 end do
 end subroutine velocity_verlet
 
-endmodule
+end module vel_verlet_module
