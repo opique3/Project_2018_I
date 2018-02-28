@@ -1,8 +1,4 @@
-!--------------------
-!MADE BY ORIOL PIQUÉ
-!--------------------
-
-module PBCmodule
+module pbc_module
 implicit none
 contains
 
@@ -14,3 +10,4 @@ real(8), dimension(3), intent(inout)            :: v
 
 v(:) = v(:) - nint(v(:)/boxSize)*boxSize
 end subroutine pbc
+end module pbc_module
