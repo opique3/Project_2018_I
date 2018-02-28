@@ -1,9 +1,5 @@
-!--------------------
-!MADE BY ORIOL PIQUÉ
-!--------------------
-
-module LJmodule
-use PBCmodule
+module lj_module
+use pbc_module
 implicit none
 contains
 
@@ -34,3 +30,4 @@ do i = 1, nPart, 1; do j = i + 1, nPart, 1
         end if
 end do; end do
 end subroutine LJ_pot
+end module lj_module
