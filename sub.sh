@@ -21,7 +21,7 @@ cp ../lj_module.f90 .
 cp ../moment_module.f90 .
 cp ../position_module.f90 .
 cp ../velocities_module.f90 .
-cp ../andersen_module.f90 .
+cp ../andersen_therm_module.f90 .
 cp ../vel_verlet_module.f90 .
 cp ../print_positions_module.f90 .
 cp ../kinetic_energy_module.f90 .
