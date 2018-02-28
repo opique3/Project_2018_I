@@ -1,1 +1,5 @@
-
+*.mod
+*.o
+pos_test
+test_pos.f90
+*.xyz
