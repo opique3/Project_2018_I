@@ -50,7 +50,8 @@ end if
 ! Generar la posició inicial de totes les partícules conforme a un cristall 
 ! d'una cel·la bcc. I fondre el cristall amb una temperatura molt alta
 num_nodes = int(nPart**(1/3))
-call IN_positions(num_nodes, nPart, density, pos)
+boxSize = nPartDim/(density)**(1./3.)
+call SC_init_conditions(nPart, pos, boxSize)
 call IN_velocities(nPart, T, seed, vel)
 dtAux = 0.001*dt
 time = 0.0D0
