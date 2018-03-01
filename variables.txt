@@ -16,7 +16,7 @@ density --> density of the system | DOUBLE PRECISION
 pos(N,3) --> positions of the particles | DOUBLE PRECISION
 vel(N,3) --> velocities | DOUBLE PRECISION
 P_total(3) --> total momentum | DOUBLE PRECISION
-
+T --> Temperature | DOUBLE PRECISION
 
 # Adrià
 
