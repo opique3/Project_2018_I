@@ -28,7 +28,7 @@ cp ../kinetic_energy_module.f90 .
 cp ../read_data_module.f90 .
 cp ../print_data_module.f90 .
 
-make Makefile
+make compile-pbc compile-lj compile-init_pos compile-init_vel compile-thermo compile-verlet compile-KE compile-read_data compile-print_data compile-mom compile-pos compile-main compile-MB compile-rdf 
 
 ./dynamics input.dat
 ./check_MB velocity.out
