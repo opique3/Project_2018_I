@@ -4,6 +4,7 @@ use moment_module
 use positions_module
 use velocities_module
 use andersen_therm_module
+use distort_module
 use vel_verlet_module
 use lj_module
 use pbc_module
@@ -15,7 +16,7 @@ use print_data_module
 implicit none
 character(25)                           :: fName, fff
 integer                                 :: i, j, k, l, m, n
-integer                                 :: fStat, un, num_nodes
+integer                                 :: fStat, un
 real(4)                                 :: start, finish
 real(8)                                 :: dt, boxSize, cutOff, T, density, dtAux
 integer                                 :: nPartDim, nPart, nSteps
@@ -49,18 +50,17 @@ end if
     
 ! Generar la posició inicial de totes les partícules conforme a un cristall 
 ! d'una cel·la bcc. I fondre el cristall amb una temperatura molt alta
-num_nodes = int(nPart**(1/3))
-boxSize = nPartDim/(density)**(1./3.)
+!boxSize = nPartDim/(density)**(1./3.)
 call SC_init_conditions(nPart, pos, boxSize)
 call IN_velocities(nPart, T, seed, vel)
 dtAux = 0.001*dt
 time = 0.0D0
-do i = 1, int(0.001*nSteps)
-    call velocity_verlet(time, dtAux, pos, vel, nPart, eps, sig, boxSize, cutOff, V, F)
-    call andersen_thermo(dt, 100.0d0, nPart, i, vel)
-end do
+!do i = 1, int(0.001*nSteps)
+!    call velocity_verlet(time, dtAux, pos, vel, nPart, eps, sig, boxSize, cutOff, V, F)
+!    call andersen_thermo(dt, 5.0d0, nPart, i, vel)
+!end do
 
-!call distort_geometry(nPart, pos, boxSize, seed)
+call distort_geometry(nPart, pos, boxSize, seed)
 ! Genera una distribució de velocitats gaussiana amb l'algoritme de Box_Muller
 call IN_velocities(nPart, T, seed, vel)
     
