@@ -1,4 +1,4 @@
-module moment
+module moment_module
 implicit none
 contains
 
@@ -17,4 +17,4 @@ end do
 end subroutine momentum
 
 
-end module moment
+end module moment_module

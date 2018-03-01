@@ -10,19 +10,27 @@
 
 setenv old `pwd`
 cd $old
-cp ../develop/dynamicsModule.f90 .
-cp ../develop/dynamics.f90 .
-cp ../develop/check_MB.f90 .
-cp ../develop/rdf.f90 .
 
-gfortran -c dynamicsModule.f90
-gfortran -o dynamics dynamicsModule.o dynamics.f90 -O3
-gfortran -o check_MB check_MB.f90 -O3
-gfortran -o rdf dynamicsModule.o rdf.f90 -O3
+#cp ../EIA_dynamics_main.f90 .
+#cp ../check_MB.f90 .
+#cp ../rdf.f90 .
+#cp ../Makefile .
+#cp ../pbc_module.f90 .
+#cp ../lj_module.f90 .
+#cp ../moment_module.f90 .
+#cp ../position_module.f90 .
+#cp ../velocities_module.f90 .
+#cp ../andersen_therm_module.f90 .
+#cp ../vel_verlet_module.f90 .
+#cp ../print_positions_module.f90 .
+#cp ../kinetic_energy_module.f90 .
+#cp ../read_data_module.f90 .
+#cp ../print_data_module.f90 .
+
+make compile-pbc compile-lj compile-init_pos compile-init_vel compile-thermo compile-verlet compile-KE compile-read_data compile-print_data compile-mom compile-pos compile-main compile-MB compile-rdf 
 
 ./dynamics input.dat
 ./check_MB velocity.out
 ./rdf traj.xyz 25
 
-rm -f dynamics.* dynamicsModule.* dynamicsmodule* dynamics
-
+rm -f *.mod *.o dynamics check_MB rdf
