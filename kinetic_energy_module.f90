@@ -1,4 +1,4 @@
-module kintetic_energy_module
+module kinetic_energy_module
 contains
 subroutine kinetic_energy(vel, KE, Tinst, nPart)
 implicit none
@@ -18,4 +18,4 @@ end do
 KE = KE/2.0
 Tinst = 2.0*KE/(3.0*float(nPart))
 end subroutine kinetic_energy
-end module kintetic_energy_module
+end module kinetic_energy_module

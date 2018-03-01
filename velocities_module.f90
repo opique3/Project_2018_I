@@ -1,16 +1,17 @@
-module velocities
+module velocities_module
 implicit none
 contains
 
 subroutine IN_velocities(N,T,seed,vel)
 implicit none
 INTEGER, INTENT(IN) :: N, seed
-REAL(8), DIMENSION(N,3), INTENT(IN) :: vel
+REAL(8), INTENT(IN) :: T
+REAL(8), DIMENSION(N,3), INTENT(out) :: vel
 INTEGER :: i
 REAL(8) :: x1, x2, w, sigma
 
 call srand(seed)
-sigma = dsqrt(T)
+sigma = sqrt(T)
 
 Do i = 1,N,1
   Do while(w .ge. 1.0 .or. w .eq. 0.0)
@@ -36,4 +37,4 @@ end do
 
 end subroutine IN_velocities
 
-end module velocities
+end module velocities_module

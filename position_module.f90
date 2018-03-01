@@ -1,4 +1,4 @@
-module positions
+module positions_module
 implicit none
 contains
 
@@ -28,4 +28,4 @@ end do
 
 end subroutine IN_positions
 
-end module positions
+end module positions_module

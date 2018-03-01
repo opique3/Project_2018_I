@@ -1,4 +1,4 @@
-module andersen_thermo_module
+module andersen_therm_module
 contains
 subroutine andersen_thermo(dt, T, nPart, seed, vel)
 implicit none
@@ -40,4 +40,4 @@ do i = 1, nPart, 1
         end if
 end do
 end subroutine andersen_thermo
-end module andersen_thermo_module
+end module andersen_therm_module
