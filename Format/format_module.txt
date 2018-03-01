@@ -1,0 +1,28 @@
+!------------------------
+!MADE BY YOUR NAME
+!-------------------------
+
+module name_module
+use module?
+implicit none
+contains
+
+!This module contains the subroutine that ...
+
+
+!Variables(in):
+
+!Description of variable1 (variable1)
+!Description of variable2 (variable2)
+
+
+!Variables(out):
+
+!Description of variable1 (variable1)
+!Description of variable2 (variable2)
+
+
+subroutine name(variable1, variable2)
+INSERT SUBROUTINE HERE
+end subroutine name
+end module name_module
