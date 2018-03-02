@@ -1,3 +1,16 @@
+!::::::::::::::::::::::::
+! MADE BY GENIS LLEOPART
+!::::::::::::::::::::::::
+
+! Contains the subroutine momentum, which calculate
+! the total intertial momentum of our system
+
+! Variables IN:
+!   N 	--> Number of particles | INTEGER
+!   vel --> Velocities of the particles | DIMENSION(N,3), REAL(8)
+
+! Variables OUT:
+!   P_total --> Total momentum | DIMENSION(3), REAL(8)
 module moment_module
 implicit none
 contains

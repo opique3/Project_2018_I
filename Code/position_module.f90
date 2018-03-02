@@ -1,3 +1,18 @@
+!:::::::::::::::::::::::::
+! MADE BY GENIS LLEOPART
+!:::::::::::::::::::::::::
+
+! This module contain the subroutine positions, which
+! generate the initial positions of the particles 
+! following a Simple Cubic Geometry
+
+! Variables IN:
+!   nPart --> Number of particles | INTEGER
+!   boxSize --> Length of our box simulation | REAL(8)
+
+! Variables OUT:
+!   pos --> Particle positions | DIMENSION(nPart,3), REAL(8)
+
 module positions_module
 implicit none
 contains
@@ -11,18 +26,14 @@ real(8)                                         :: dist
 real(8), dimension(3)                           :: e1, e2, e3, r
 integer                                         :: i, j, k
 
-! La idea aqui es construïr els vectors directors que generen la cela SC
-! on les seves components coincideixin amb les posicions dels atoms a la cel·la
-! unitat
+! Generate the length of the basis box and the basis vectors
 dist = boxSize/dfloat(nPart)**(1./3.)
 r  = (/dist, dist, dist/) 
 e1 = (/dist, 0.0D0, 0.0D0/)
 e2 = (/0.0D0, dist, 0.D0/)
 e3 = (/0.0D0, 0.0D0, dist/)
 
-! Aquesta forma de col·locar les particules en una cel·la SC
-! fa que el numero total de particules hagi de ser multiple de 8
-! ja que son el les que hi ha en la cel·la unitat.
+! Generate structures of 8 particles, following a SC
 do i = 0, nPart - 8, 8
         pos(i+1,:) = r
         pos(i+2,:) = e1 + r

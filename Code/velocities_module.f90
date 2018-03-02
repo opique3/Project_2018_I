@@ -1,3 +1,20 @@
+!::::::::::::::::::::::::
+! MADE BY GENIS LLEOPART
+!::::::::::::::::::::::::
+
+! Contains the subroutine initial velocities, which
+! inicialize randomly the velocities of the particles 
+! given values from [-0.5:0.5] 
+! To do that we use a Box Muller random generator, this way
+! our velocities will follow a Boltzmann distribution
+
+! Variables IN:
+!   N 		--> Number of particles | INTEGER
+!   T 		--> Temperature | REAL(8)
+!   sedd 	--> seed to generate random numbers | INTEGER
+
+! Variables OUT:
+!  vel 		--> Velocities of the particles | DIMENSION(N,3), REAL(8)
 module velocities_module
 implicit none
 contains
@@ -11,10 +28,12 @@ INTEGER :: i
 REAL(8) :: x1, x2, w, sigma
 
 call srand(seed)
+! Our desviation will depend on the Temperature
 sigma = sqrt(T)
 
 Do i = 1,N,1
   Do while(w .ge. 1.0 .or. w .eq. 0.0)
+! Generate a initial pair of random numbers
     x1 = 2.*rand() - 1.
     x2 = 2.*rand() - 1.
     w = x1*x1 + x2*x2
@@ -24,6 +43,7 @@ Do i = 1,N,1
   vel(i,1) = x1*w
   vel(i,2) = x2*w
 
+! Generate other pair for the thirst component
   Do while(w .ge. 1.0 .or. w .eq. 0.0)
     x1 = 2.*rand() - 1.
     x2 = 2.*rand() - 1.
