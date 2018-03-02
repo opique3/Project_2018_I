@@ -1,9 +1,31 @@
+!------------------------
+!MADE BY ORIOL PIQUÉ
+!-------------------------
+
 module lj_module
 use pbc_module
 implicit none
 contains
 
-!Subrutina pel càlcul de les forces conseqüència de la interacció LJ entre les nostres partícules.
+!This module contains the subroutine that calculates the resulting forces that appear because of the LJ potential interaction between the particles.
+
+
+!Variables(in):
+
+!Number of particles (nPart)
+!Positions array (pos)
+!Epsilon (eps)
+!Sigma (sig)
+!Size of the simulation box (boxSize)
+!Cutoff distance (cutOff)
+
+
+!Variables(out):
+
+!Forces array (F)
+!Potential (V)
+
+
 subroutine LJ_pot(nPart, pos, eps, sig, boxSize, cutOff, F, V)
 implicit none
 integer, intent(in)                             :: nPart
