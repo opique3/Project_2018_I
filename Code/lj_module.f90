@@ -48,9 +48,6 @@ do i = 1, nPart, 1; do j = i + 1, nPart, 1
                 V  = V + 4.*eps*((sig/rij)**12. - (sig/rij)**6.)
                 dV = 4*eps*(12.*sig**12./rij**13. - 6.*sig**6./rij**7)
                 F(i,:) = F(i,:) + dV*dist(:)
-                F(j,:) = F(j,:) - dV*dist(:)
-                print *, F(i,:)
-                print *, F(j,:)
         end if
 end do; end do
 end subroutine LJ_pot
