@@ -1,3 +1,8 @@
+
+
+compile-main: EIA_dynamics_main.f90
+	gfortran pbc_module.f90 lj_module.f90 moment_module.f90 position_module.f90 velocities_module.f90 andersen_therm_module.f90 vel_verlet_module.f90 print_positions_module.f90 kinetic_energy_module.f90 read_data_module.f90 print_data_module.f90 EIA_dynamics_main.f90 -o dynamics
+
 compile-pbc: pbc_module.f90
 	gfortran -c pbc_module.f90
 
@@ -30,12 +35,4 @@ compile-read_data: read_data_module.f90
 
 compile-print_data: print_data_module.f90
 	gfortran -c print_data_module.f90
-
-compile-main: EIA_dynamics_main.f90
-	gfortran pbc_module.o lj_module.o moment_module.o position_module.o velocities_module.o andersen_therm_module.o vel_verlet_module.o print_positions_module.o kinetic_energy_module.o read_data_module.o print_data_module.o EIA_dynamics_main.f90 -o dynamics
-
-compile-MB: check_MB.f90
-	gfortran check_MB.f90 -o check_MB
-compile-rdf: rdf.f90
-	gfortran pbc_module.o rdf.f90 -o rdf
 

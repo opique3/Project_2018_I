@@ -27,10 +27,15 @@ cd $old
 #cp ../read_data_module.f90 .
 #cp ../print_data_module.f90 .
 
-make compile-pbc compile-lj compile-init_pos compile-init_vel compile-thermo compile-verlet compile-KE compile-read_data compile-print_data compile-mom compile-pos compile-main compile-MB compile-rdf 
+make
+
+gfortran pbc_module.f90 rdf.f90 -o rdf
+gfortran check_MB.f90 -o check_MB
+
 
 ./dynamics input.dat
 ./check_MB velocity.out
 ./rdf traj.xyz 25
 
 rm -f *.mod *.o dynamics check_MB rdf
+
