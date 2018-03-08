@@ -32,6 +32,7 @@ make
 gfortran pbc_module.f90 rdf.f90 -o rdf
 gfortran check_MB.f90 -o check_MB
 
+
 ./dynamics input.dat
 ./check_MB velocity.out
 ./rdf traj.xyz 25
