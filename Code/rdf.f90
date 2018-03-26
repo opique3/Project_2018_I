@@ -4,7 +4,7 @@ implicit none
 character(25)                           :: fName
 character(5)                            :: trash
 real(8)                                 :: boxSize
-integer                                 :: fStat, un, unOut
+integer                                 :: fStat, un, unOut, paramUn
 integer                                 :: nPart, nIt, nRad
 integer                                 :: i, j, k, l
 real(8), allocatable, dimension(:,:)    :: pos
@@ -26,12 +26,13 @@ if (fStat /= 0) then
         print*, 'Size of the box needed ---> Exitting program'
         call exit()
 end if
-read(fName,*) boxSize
+open(unit=paramUn, file=trim(fName), status='old')
+read(paramUn,*) nIt, nPart
+read(paramUn,*) boxSize
 
 iniRad = 0.0D0; finRad = boxSize; nRad = 200
 pasR = (finRad - iniRad)/dfloat(nRad)
 
-read(un,*) nIt, nPart
 allocate(pos(nPart,3), histogram(nRad + 2))
 
 histogram(:) = 0
@@ -80,7 +81,7 @@ do i = 1, nRad + 2, 1
         write(unOut,*) iniRad + (i-1)*pasR, histogram(i)/(nIt*factor*minRad**2)
         minRad = minRad + pasR
 end do
-close(un); close(unOut)
+close(un); close(unOut); close(paramUn)
 contains
 
 end program rdf

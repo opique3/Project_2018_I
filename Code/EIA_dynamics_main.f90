@@ -18,13 +18,13 @@ character(25)                           :: fName, fff
 integer                                 :: i, j, k, l, m, n
 integer                                 :: fStat, un
 real(4)                                 :: start, finish
-real(8)                                 :: dt, boxSize, cutOff, T, density, dtAux
+real(8)                                 :: dt, boxSize, cutOff, T, density
 integer                                 :: nPartDim, nPart, nSteps
 real(8), allocatable, dimension(:,:)    :: pos, F, vel
 real(8)                                 :: V, eps, sig, time, KE, Tinst
 real(8), allocatable, dimension(:)      :: total_momentum
 integer                                 :: seed, trjCount, thermCount
-integer                                 :: initUn, finUn, trajUn, dataUn, velUn
+integer                                 :: initUn, finUn, trajUn, dataUn, velUn, paramUn
     
 call cpu_time(start)
 call get_command_argument(1, fName, status=fStat)
@@ -47,44 +47,37 @@ if (mod(float(nPart),8.) /= 0.) then
         call exit()
 end if
     
-    
 ! Generar la posició inicial de totes les partícules conforme a un cristall 
-! d'una cel·la bcc. I fondre el cristall amb una temperatura molt alta
-!boxSize = nPartDim/(density)**(1./3.)
+! d'una cel·la Simple Cubic. I distorsiona les posicions inicials per tal de que
+! no tingui tanta energia reticular.
 call SC_init_conditions(nPart, pos, boxSize)
-call IN_velocities(nPart, T, seed, vel)
-dtAux = 0.001*dt
-time = 0.0D0
-!do i = 1, int(0.001*nSteps)
-!    call velocity_verlet(time, dtAux, pos, vel, nPart, eps, sig, boxSize, cutOff, V, F)
-!    call andersen_thermo(dt, 5.0d0, nPart, i, vel)
-!end do
-
 call distort_geometry(nPart, pos, boxSize, seed)
+
 ! Genera una distribució de velocitats gaussiana amb l'algoritme de Box_Muller
 call IN_velocities(nPart, T, seed, vel)
     
 ! Obre els arxius on s'imprimiran els resultats de la simulació
-initUn = 101; finUn = 102; trajUn = 103; dataUn = 104; velUn = 105
-open(unit=initUn, file='initial.out')   ! Coord. Inicials
-open(unit=finUn , file='final.out')     ! Coord. Finals
-open(unit=trajUn, file='traj.xyz')      ! Trajectoria
-open(unit=dataUn, file='data.out')     ! T, Ken, V, temps...
-open(unit=velUn,  file='velocity.out')     ! T, Ken, V, temps...
+initUn = 101; finUn = 102; trajUn = 103; dataUn = 104; velUn = 105; paramUn = 106
+open(unit=initUn, file='initial.out')           ! Coord. Inicials
+open(unit=finUn , file='final.out')             ! Coord. Finals
+open(unit=trajUn, file='traj.xyz')              ! Trajectoria
+open(unit=dataUn, file='data.out')              ! T, Ken, V, temps...
+open(unit=velUn,  file='velocity.out')          ! T, Ken, V, temps...
+open(unit=paramUn,file='parameters.out')        ! Parameters needed for statistics
+                                                ! (MB and RDF)
+write(paramUn,*) nSteps/100 - 1, nPart
+write(paramUn,*) boxSize
 
 call print_positions(initUn, nPart, pos, time)
 ! Començem la MD inicialitzant el temps a 0 i fent el numero de pasos
 ! especificats
 time = 0.0D0; trjCount = 0; thermCount = 0
-write(velUn, *) nSteps/100 - 1, nPart
-write(trajUn,*) nSteps/100 - 1, nPart
 call print_positions(trajUn, nPart, pos, time)
-
 call print_positions(velUn,  nPart, vel, time)
 
 do i = 1, nSteps, 1
         call velocity_verlet(time, dt, pos, vel, nPart, eps, sig, boxSize, cutOff, V, F)
-        if (trjCount == 100) then
+        if (mod(trjCount,100) == 0) then
                 call print_positions(trajUn, nPart, pos, time)
                 call print_positions(velUn,  nPart, vel, time)
                 call kinetic_energy(vel, KE, Tinst, nPart)
@@ -92,7 +85,7 @@ do i = 1, nSteps, 1
                 call print_data(time, V, KE, Tinst, total_momentum, dataUn)
                 trjCount = 0
         end if
-        if (thermCount == 10) then
+        if (mod(thermCount,10) == 0) then
                 call andersen_thermo(dt, T, nPart, i, vel)
                 thermCount = 0
         end if
