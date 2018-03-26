@@ -16,7 +16,7 @@ call srand(seed)
 ! La distortion es, com a maxim, un 1/3 de la distancia maxima
 ! que hi ha entre les particules veines.
 ! S'aplica a cada dimensió
-maxDisp = boxSize/(5*dfloat(nPart)**(1./3.))
+maxDisp = boxSize/(6*dfloat(nPart)**(1./3.))
 do i = 1, nPart, 1
         do j = 1, 3, 1
                 randN = 2*rand() - 1. ! Numero entre -1 i 1

@@ -31,7 +31,9 @@ call srand(seed)
 ! Our desviation will depend on the Temperature
 sigma = sqrt(T)
 
+
 Do i = 1,N,1
+  w = 2.0
   Do while(w .ge. 1.0 .or. w .eq. 0.0)
 ! Generate a initial pair of random numbers
     x1 = 2.*rand() - 1.
@@ -44,6 +46,7 @@ Do i = 1,N,1
   vel(i,2) = x2*w
 
 ! Generate other pair for the thirst component
+  w = 2.0
   Do while(w .ge. 1.0 .or. w .eq. 0.0)
     x1 = 2.*rand() - 1.
     x2 = 2.*rand() - 1.

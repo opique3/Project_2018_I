@@ -2,7 +2,7 @@ program check_MB
 implicit none
 character(25)                           :: fName
 character(5)                            :: trash
-integer                                 :: fStat, un, unOut
+integer                                 :: fStat, un, unOut, paramUn
 integer                                 :: nPart, nIt, nHist
 integer                                 :: i, j, k, l
 real(8), allocatable, dimension(:,:)    :: vel
@@ -21,7 +21,14 @@ iniHist = -15.0D0; finHist = 15.0D0; nHist = 3000
 pasH = (finHist - iniHist)/dfloat(nHist)
 
 open(unit=un, file=trim(fName), status='old')
-read(un,*) nIt, nPart
+
+call get_command_argument(2, fName, status=fStat)
+if (fStat /= 0) then
+        print*, 'Any file given ---> Exitting program'
+        call exit()
+end if
+open(unit=paramUn, file=trim(fName), status='old')
+read(paramUn,*) nIt, nPart
 allocate(vel(nPart,3), histogram(nHist + 2))
 
 
@@ -60,7 +67,7 @@ open(unit=unOut, file='MB_velocityDistribution.out')
 do i = 1, nHist + 2, 1
         write(unOut,*) iniHist + (i-1)*pasH, histogram(i)
 end do
-close(un); close(unOut)
+close(un); close(unOut); close(paramUn)
 
 
 contains
