@@ -3,17 +3,19 @@ use mpi
 implicit none
 contains
 
-subroutine send_recv_array(dats, myFirstPart, myLastPart, ierror, nPart)
+subroutine send_recv_array(dats, myFirstRow, myLastRow, rank, nRow, status, full_dats)
 implicit none
-integer, intent(in)                                     :: ierror, nPart
-integer, intent(in)                                     :: myFirstPart, myLastPart
+integer, intent(in)                                     :: nRow, rank, status
+integer                                                 :: ierror
+integer, intent(in)                                     :: myFirstRow, myLastRow
 real(8), dimension(:,:), intent(inout)                  :: dats
 real(8), optional, dimension(:,:), intent(out)          :: full_dats
 integer, parameter                                      :: rMaster = 0
 integer                                                 :: i, nDats, numProcs
+integer                                                 :: numRows, procFirstRow, procLastRow
 
 call mpi_comm_size(mpi_comm_world, numProcs, ierror)
-numParts = nPart/numProcs
+numRows = nRow/numProcs
 if (rank == rMaster) then
         if (.not.present(full_dats)) then
                 print*, "ERROR WHILE CALLING send_recv_array()"
@@ -23,33 +25,33 @@ if (rank == rMaster) then
         end if
 
         do i = 0, numProcs - 1, 1
-                procFirstPart = i*numParts + 1
-                if (i /= numProcs - 1) procLastPart = procFirstPart + numParts - 1
-                if (i == numProcs - 1) procLastPart = nPart
+                procFirstRow = i*numRows + 1
+                if (i /= numProcs - 1) procLastRow = procFirstRow + numRows - 1
+                if (i == numProcs - 1) procLastRow = nRow
                 if (i == rMaster) then
-                        full_dats(procFirstPart:procLastPart,:) = dats(:,:)
+                        full_dats(procFirstRow:procLastRow,:) = dats(:,:)
                         cycle
                 end if
-                nDats = myLastPart - myFirstPart
+                nDats = 3*(procLastRow - procFirstRow + 1)
                 call mpi_recv(&
-                & dats,                 &
-                & 3*nDats,              &
-                & mpi_real,             &
-                & i,                    &
-                & mpi_any_tag,          &
-                & mpi_comm_world,       &
-                & status,               &
-                & ierror
+                & full_dats(procFirstRow:procLastRow,:),      &
+                & nDats,                                        &
+                & mpi_real8,                                    &
+                & i,                                            &
+                & mpi_any_tag,                                  &
+                & mpi_comm_world,                               &
+                & status,                                       &
+                & ierror                                        &
                 &)
-                full_dats(procFirstPart:procLastPart,:) = dats(:,:)
+
                 
         end do
 else if (rank /= rMaster) then
-        nDats = size(dats)
+        nDats = 3*(myLastRow - myFirstRow + 1)
         call mpi_send(&
         & dats,                 &
-        & 3*nDats,              &
-        & mpi_real,             &
+        & nDats,                &
+        & mpi_real8,            &
         & rMaster,              &
         & 2001,                 &
         & mpi_comm_world,       &
@@ -57,6 +59,6 @@ else if (rank /= rMaster) then
         &)
 
 end if
-end subroutine send_recv
+end subroutine send_recv_array
 end module send_rec_module
 
